@@ -1,10 +1,9 @@
-import Header from "./components/Header";
-import Slider from "./components/Slider";
+import Heading from "./components/Heading";
 
 export default function App() {
     return (
-        <>
-            <Header />
-        </>
+    <>
+        <Heading/>       
+    </>
     );
 }
