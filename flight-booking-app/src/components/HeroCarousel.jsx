@@ -15,17 +15,17 @@ const slides = [
     {
         title: "TUF Airline",
         bg: slider_1,
-        btnText: "LET BOOK YOUR FLIGHT NOW",
+        btnText: "BOOK YOUR FLIGHT NOW",
     },
     {
         title: "TUF Airline",
         bg: slider_2,
-        btnText: "LET BOOK YOUR FLIGHT NOW",
+        btnText: "BOOK YOUR FLIGHT NOW",
     },
     {
         title: "TUF Airline",
         bg: slider_3,
-        btnText: "LET BOOK YOUR FLIGHT NOW",
+        btnText: "BOOK YOUR FLIGHT NOW",
     },
 ];
 
@@ -39,7 +39,7 @@ const HeroCarousel = () => {
                 delay: 3000,
                 disableOnInteraction: false,
             }}
-            className="heroSlider h-[500px] lg:h-[600px]"
+            className="heroSlider h-[500px] lg:h-[650px]"
         >
             {slides.map((slide, index) => {
                 //destructure slide
@@ -60,7 +60,12 @@ const HeroCarousel = () => {
                             >
                                 {title}
                             </h1>
-                            <button className="btn btn-lg btn-primary mx-auto">
+                            <button
+                                className="btn btn-lg mx-auto p-4 bg-blue-500 rounded-3xl"
+                                onClick={() => {
+                                    window.location.href = "/flights";
+                                }}
+                            >
                                 {btnText}
                             </button>
                         </div>
