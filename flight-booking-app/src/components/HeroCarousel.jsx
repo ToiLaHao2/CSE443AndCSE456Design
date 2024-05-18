@@ -7,25 +7,25 @@ import "swiper/css/effect-fade";
 //import requied modules
 import { EffectFade, Autoplay } from "swiper";
 
-import plan_1 from "../assets/plan_1.jpg";
-import plan_2 from "../assets/plan_2.jpg";
-import plan_3 from "../assets/plan_3.jpg";
+import slider_1 from "../assets/img/slider_1.png";
+import slider_2 from "../assets/img/slider_2.png";
+import slider_3 from "../assets/img/slider_3.png";
 
 const slides = [
     {
-        title: "Your Luxury Hotel For Vacation",
-        bg: plan_1,
-        btnText: "See our rooms",
+        title: "TUF Airline",
+        bg: slider_1,
+        btnText: "LET BOOK YOUR FLIGHT NOW",
     },
     {
-        title: "Your Luxury Hotel For Vacation",
-        bg: plan_2,
-        btnText: "See our rooms",
+        title: "TUF Airline",
+        bg: slider_2,
+        btnText: "LET BOOK YOUR FLIGHT NOW",
     },
     {
-        title: "Your Luxury Hotel For Vacation",
-        bg: plan_3,
-        btnText: "See our rooms",
+        title: "TUF Airline",
+        bg: slider_3,
+        btnText: "LET BOOK YOUR FLIGHT NOW",
     },
 ];
 
@@ -52,7 +52,7 @@ const HeroCarousel = () => {
                     >
                         <div className="z-20 text-white text-center">
                             <div className="uppercase font-tertiary tracking-[6px] mb-5">
-                                Just Enjoy and relax
+                                Enjoy your flight with
                             </div>
                             <h1
                                 className="text-[32px] font-primary uppercase tracking-
