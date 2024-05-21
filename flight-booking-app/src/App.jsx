@@ -8,6 +8,7 @@ import AboutUs from "./pages/AboutUsPage";
 import Login from "./pages/LoginPage";
 import Register from "./pages/SignUpPage";
 import Home from "./pages/HomePage";
+import Footer from "./components/Footer";
 
 export default function App() {
     const router = createBrowserRouter([
@@ -41,6 +42,7 @@ export default function App() {
         <div>
             <Heading />
             <RouterProvider router={router} />
+            <Footer/>
         </div>
     );
 }
