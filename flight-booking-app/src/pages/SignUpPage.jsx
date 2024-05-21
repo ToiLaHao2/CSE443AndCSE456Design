@@ -50,7 +50,7 @@ const Register = () => {
                                 Email
                             </lable>
                             <input
-                                className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
+                                className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your email address..."
                             />
                         </div>
@@ -71,9 +71,9 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <div className="hidden relative lg:flex items-center w-1/2 h-100 justify-center bg-blue-500">
+            <div className="hidden relative lg:flex items-center w-1/2 justify-center bg-blue-500">
                 <div className="w-60 h-60 bg-gradient-to-tr from-blue-700 tp-blue-500 rounded-full animate-bounce" />
-                <div className="w-full absolute bottom-0" />
+                <div className="w-full h-2/6 absolute bottom-0" />
             </div>
         </div>
     );
