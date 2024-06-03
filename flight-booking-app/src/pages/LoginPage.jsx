@@ -40,7 +40,7 @@ const Login = () => {
                             </button>
                         </div>
                         <div className="mt-6 flex flex-col gap-y-4">
-                            <p> You don't have account? Create here &#8595;</p>
+                            <p className="text-center"> You don't have account? Create here &#8595;</p>
                             <button
                                 className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-medium"
                                 onClick={() =>

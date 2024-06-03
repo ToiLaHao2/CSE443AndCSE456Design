@@ -17,7 +17,7 @@ const FindFlightForm = (type) => {
                         <TypeDate data="Departure Date" />
                     </div>
                     <div className="flex-1">
-                        <TypeDate data="Return Date" type={type.data}/>
+                        <TypeDate data="Return Date"/>
                     </div>
                     <div className="flex-1 p-4">
                         <button
