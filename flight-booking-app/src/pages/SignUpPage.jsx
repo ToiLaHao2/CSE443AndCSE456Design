@@ -1,6 +1,71 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { middleWareWithPOST } from "../api/ApiService";
+import { PassengerContext } from "../contexts/PassengerContext";
 
 const Register = () => {
+    const [fullname, setFullName] = useState(null);
+    const [dob, setDob] = useState(null);
+    const [gender, setGender] = useState(null);
+    const [nationality, setNationality] = useState(null);
+    const [redirect, setRedirect] = useState(false);
+    const [password, setPassword] = useState(null);
+    const { getPassengerDetail, email, setEmail } =
+        useContext(PassengerContext);
+
+    function handleCheckData() {
+        if (fullname === null) {
+            alert("Full name is not fill in");
+            return false;
+        } else if (dob === null) {
+            alert("Date of birth is not fill in");
+            return false;
+        } else if (gender === null) {
+            alert("Gender is not fill in");
+            return false;
+        } else if (nationality === null) {
+            alert("Password is not fill in");
+            return false;
+        } else if (email === null) {
+            alert("Email is not fill in");
+            return false;
+        } else if (password === null) {
+            alert("Password is not fill in");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    async function handleRegister(ev) {
+        // ev.preventDefault();
+        if (handleCheckData() === true) {
+            const formData = new FormData();
+            formData.append("fullName", fullname);
+            formData.append("dateOfBirth", dob);
+            formData.append("gender", gender);
+            formData.append("nationality", nationality);
+            formData.append("email", email);
+            formData.append("password", password);
+            try {
+                middleWareWithPOST
+                    .post("/passenger/register", formData)
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        alert(err.response.data.message);
+                    });
+            } catch (error) {
+                alert(err.response.data.message);
+            }
+            getPassengerDetail();
+            setRedirect(true);
+        }
+        if (redirect === true) {
+            window.location.href = "/";
+        }
+    }
+
     return (
         <div className="flex w-full">
             <div className="w-full h-5/6 p-20 flex items-center justify-center lg:w-1/2">
@@ -16,6 +81,7 @@ const Register = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your full name..."
+                                onChange={(ev) => setFullName(ev.target.value)}
                             />
                         </div>
                         <div className="pb-2">
@@ -25,6 +91,7 @@ const Register = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your date of birth..."
+                                onChange={(ev) => setDob(ev.target.value)}
                             />
                         </div>
                         <div className="pb-2">
@@ -33,7 +100,8 @@ const Register = () => {
                             </lable>
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
-                                placeholder="Enter your user name..."
+                                placeholder="Enter your gender..."
+                                onChange={(ev) => setGender(ev.target.value)}
                             />
                         </div>
                         <div className="pb-2">
@@ -42,7 +110,10 @@ const Register = () => {
                             </lable>
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
-                                placeholder="Enter your password..."
+                                placeholder="Enter your nationality..."
+                                onChange={(ev) =>
+                                    setNationality(ev.target.value)
+                                }
                             />
                         </div>
                         <div>
@@ -52,11 +123,28 @@ const Register = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your email address..."
+                                onChange={(ev) => setEmail(ev.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <lable className="text-medium font-primary font-bold">
+                                Password
+                            </lable>
+                            <input
+                                className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
+                                placeholder="Enter your password here..."
+                                type="password"
+                                onChange={(ev) => setPassword(ev.target.value)}
                             />
                         </div>
                     </div>
                     <div className="mt-4 flex flex-col gap-y-2">
-                        <button className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-2 rounded-xl bg-blue-700 text-white text-base font-bold font-primary">
+                        <button
+                            className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-2 rounded-xl bg-blue-700 text-white text-base font-bold font-primary"
+                            onClick={() => {
+                                handleRegister();
+                            }}
+                        >
                             Register Now
                         </button>
                         <p className="text-center">

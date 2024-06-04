@@ -1,4 +1,50 @@
+import { useContext, useState } from "react";
+import { middleWareWithPOST } from "../api/ApiService";
+import { PassengerContext } from "../contexts/PassengerContext";
+
 const Login = () => {
+    const [redirect, setRedirect] = useState(false);
+    const [password, setPassword] = useState(null);
+    const { getPassengerDetail, email, setEmail } =
+        useContext(PassengerContext);
+
+    function handleCheckData() {
+        if (email === null) {
+            alert("Email is not fill in");
+            return false;
+        } else if (password === null) {
+            alert("Password is not fill in");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function handleLogin(ev) {
+        if (handleCheckData() == true) {
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("password", password);
+            try {
+                middleWareWithPOST
+                    .post("/passenger/login", formData)
+                    .then((res) => {
+                        alert(res);
+                    })
+                    .catch((err) => {
+                        alert(err.response.data.message);
+                    });
+            } catch (err) {
+                alert(err.response.data.message);
+            }
+            getPassengerDetail();
+            setRedirect(true);
+        }
+        if (redirect === true) {
+            window.location.href = "/";
+        }
+    }
+
     return (
         <div className="flex w-full">
             <div className="w-full h-5/6 p-20 flex items-center justify-center lg:w-1/2">
@@ -10,8 +56,8 @@ const Login = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                 placeholder="Enter your email address..."
-                                // value={email}
-                                // onChange={(ev) => setEmail(ev.target.value)}
+                                value={email}
+                                onChange={(ev) => setEmail(ev.target.value)}
                             />
                         </div>
                         <div>
@@ -22,8 +68,8 @@ const Login = () => {
                                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                 placeholder="Enter your password..."
                                 type="password"
-                                // value={password}
-                                // onChange={(ev) => setPassword(ev.target.value)}
+                                value={password}
+                                onChange={(ev) => setPassword(ev.target.value)}
                             />
                         </div>
                         <div className="mt-8 flex justify-between items-center">
@@ -34,13 +80,16 @@ const Login = () => {
                         <div className="mt-8 flex flex-col gap-y-4">
                             <button
                                 className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-700 text-white text-lg font-bold"
-                                // onClick={handleLogin}
+                                onClick={handleLogin}
                             >
                                 Sign in
                             </button>
                         </div>
                         <div className="mt-6 flex flex-col gap-y-4">
-                            <p className="text-center"> You don't have account? Create here &#8595;</p>
+                            <p className="text-center">
+                                {" "}
+                                You don't have account? Create here &#8595;
+                            </p>
                             <button
                                 className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-medium"
                                 onClick={() =>
