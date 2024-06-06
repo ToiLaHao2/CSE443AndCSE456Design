@@ -52,10 +52,10 @@ const HeroCarousel = () => {
                     >
                         <div className="z-20 text-white text-center">
                             <div className="uppercase font-tertiary tracking-[6px] mb-5">
-                                Enjoy your flight with
+                                Enjoy your journey with
                             </div>
                             <h1
-                                className="text-[32px] font-primary uppercase tracking-
+                                className="text-[32px] font-bold uppercase tracking-
               [2px] max-w-[920px] lg:text-[68px] leading-tight mb-6"
                             >
                                 {title}

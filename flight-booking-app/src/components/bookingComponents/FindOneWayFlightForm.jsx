@@ -20,7 +20,7 @@ const FindFlightForm = (type) => {
                         <button
                             onClick={(e) => handleClick(e)}
                             type="submit"
-                            className="bg-blue-500 p-2 rounded-full"
+                            className="bg-blue-500 p-2 rounded-full text-white"
                         >
                             Check now
                         </button>
