@@ -57,7 +57,7 @@ const Flights = () => {
                     <FindRoundTripFlightForm />
                 </div>
             </div>
-            <div className="h-screen mt-5">
+            <div className="h-screen mt-5 p-5">
                 <SmallFlightInformation />
             </div>
         </div>
