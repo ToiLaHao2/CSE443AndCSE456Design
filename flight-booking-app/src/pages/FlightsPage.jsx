@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FindOneWayFlightForm from "../components/bookingComponents/FindOneWayFlightForm";
 import FindRoundTripFlightForm from "../components/bookingComponents/FindRoundTripFlightForm";
+import SmallFlightInformation from "../components/flightComponents/SmallFlightInformation";
 
 const Flights = () => {
     const [activeTab, setActiveTab] = useState("tab1");
@@ -56,7 +57,9 @@ const Flights = () => {
                     <FindRoundTripFlightForm />
                 </div>
             </div>
-            <div className="h-screen"></div>
+            <div className="h-screen mt-5">
+                <SmallFlightInformation />
+            </div>
         </div>
     );
 };
