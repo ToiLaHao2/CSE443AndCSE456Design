@@ -28,7 +28,7 @@ const Register = () => {
     }, [ready]);
 
     if (isLoggedIn) {
-        return
+        return <Navigate to={"/"}/>
     }
 
     function handleCheckData() {

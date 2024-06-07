@@ -9,6 +9,7 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/SignUpPage";
 import Home from "./pages/HomePage";
 import Footer from "./components/Footer";
+import PassengerDetailPage from "./pages/PassengerDetailPage";
 
 export default function App() {
     const router = createBrowserRouter([
@@ -36,13 +37,17 @@ export default function App() {
             path: "/signUp",
             element: <Register />,
         },
+        {
+            path: "/passengerDetail",
+            element: <PassengerDetailPage />,
+        },
     ]);
 
     return (
         <div>
             <Heading />
             <RouterProvider router={router} />
-            <Footer/>
+            <Footer />
         </div>
     );
 }

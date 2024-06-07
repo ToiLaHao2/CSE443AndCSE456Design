@@ -7,11 +7,14 @@ const Heading = () => {
     const [componentShow, setComponentShow] = useState(null);
 
     useEffect(() => {
-        if (ready === true) {
+        if (ready === true && passenger.id !== null) {
             setComponentShow(
-                <button className="bg-blue-500 text-white inline-block py-2 px-4 font-bold">
+                <a
+                    href="/passengerDetail"
+                    className="bg-blue-500 text-white inline-block py-2 px-4 font-bold"
+                >
                     Welcome, {passenger.fullName}
-                </button>
+                </a>
             );
         } else {
             setComponentShow(

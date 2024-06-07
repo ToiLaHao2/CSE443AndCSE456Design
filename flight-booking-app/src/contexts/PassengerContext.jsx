@@ -5,7 +5,7 @@ export const PassengerContext = createContext();
 
 const PassengerProvider = ({ children }) => {
     const [passenger, setPassenger] = useState(() => {
-        const storePassengerData = localStorage.getItem("passengerData");
+        const storePassengerData = localStorage.getItem("passengerDataTemp");
         return storePassengerData
             ? JSON.parse(storePassengerData)
             : {
@@ -17,7 +17,7 @@ const PassengerProvider = ({ children }) => {
                   ticketType: null,
                   passportNumber: null,
                   phoneNumber: null,
-                  email: null,
+                  emailAddress: null,
                   countryOfResidence: null,
                   bookingHistory: null,
                   password: null,
@@ -43,11 +43,21 @@ const PassengerProvider = ({ children }) => {
 
     useEffect(() => {
         console.log(passenger);
-        if (passenger.id != null) {
+        if (passenger !== null) {
             setReady(true);
             handleLoginSuccess(passenger);
         }
-    }, [email]);
+    }, [passenger]);
+
+    function handleLogout() {
+        try {
+            localStorage.removeItem("passengerData");
+            setPassenger(localStorage.getItem("passengerDataTemp"));
+            setReady(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <PassengerContext.Provider
@@ -58,6 +68,7 @@ const PassengerProvider = ({ children }) => {
                 setEmail,
                 ready,
                 getPassengerDetail,
+                handleLogout,
             }}
         >
             {children}
