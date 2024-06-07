@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { middleWareWithPOST } from "../api/ApiService";
 import { PassengerContext } from "../contexts/PassengerContext";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
     const [emailLogin, setEmailLogin] = useState("");
@@ -23,14 +24,14 @@ const Login = () => {
     }, [ready]);
 
     if (isLoggedIn) {
-        window.location.href = "/";
+        return <Navigate to={"/"}/>
     }
 
     function handleCheckData() {
-        if (email === null) {
+        if (emailLogin === "") {
             alert("Email is not fill in");
             return false;
-        } else if (password === null) {
+        } else if (password === "") {
             alert("Password is not fill in");
             return false;
         } else {

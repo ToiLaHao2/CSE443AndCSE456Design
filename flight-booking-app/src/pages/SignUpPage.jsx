@@ -28,7 +28,7 @@ const Register = () => {
     }, [ready]);
 
     if (isLoggedIn) {
-        window.location.href = "/";
+        return
     }
 
     function handleCheckData() {

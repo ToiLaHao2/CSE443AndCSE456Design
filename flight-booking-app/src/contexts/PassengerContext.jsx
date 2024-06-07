@@ -26,10 +26,10 @@ const PassengerProvider = ({ children }) => {
     const [email, setEmail] = useState("");
     const [ready, setReady] = useState(false);
 
-    function getPassengerDetail() {
+    async function getPassengerDetail() {
         const formData = new FormData();
         formData.append("email", email);
-        middleWareWithPOST
+        await middleWareWithPOST
             .post("/passenger/detail", formData)
             .then((res) => setPassenger(res.data.object))
             .catch((err) => {
@@ -44,7 +44,7 @@ const PassengerProvider = ({ children }) => {
     useEffect(() => {
         console.log(passenger);
         if (passenger.id != null) {
-            setReady(false); // Đặt setReady(false) khi email thay đổi để chuẩn bị cho việc gửi yêu cầu mới
+            setReady(true);
             handleLoginSuccess(passenger);
         }
     }, [email]);
