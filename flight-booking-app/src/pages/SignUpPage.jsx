@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { middleWareWithPOST } from "../api/ApiService";
 import { PassengerContext } from "../contexts/PassengerContext";
 
@@ -7,10 +7,29 @@ const Register = () => {
     const [dob, setDob] = useState(null);
     const [gender, setGender] = useState(null);
     const [nationality, setNationality] = useState(null);
-    const [redirect, setRedirect] = useState(false);
     const [password, setPassword] = useState(null);
-    const { getPassengerDetail, email, setEmail } =
+    const [emailSignUp, setEmailSignUp] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const { getPassengerDetail, email, setEmail, ready } =
         useContext(PassengerContext);
+
+    useEffect(() => {
+        if (email !== "") {
+            getPassengerDetail();
+        }
+    }, [email, getPassengerDetail]);
+
+    useEffect(() => {
+        if (ready === true) {
+            setIsLoggedIn(true);
+        }
+    }, [ready]);
+
+    if (isLoggedIn) {
+        window.location.href = "/";
+    }
 
     function handleCheckData() {
         if (fullname === null) {
@@ -44,25 +63,25 @@ const Register = () => {
             formData.append("dateOfBirth", dob);
             formData.append("gender", gender);
             formData.append("nationality", nationality);
-            formData.append("email", email);
+            formData.append("email", emailSignUp);
             formData.append("password", password);
             try {
                 middleWareWithPOST
                     .post("/passenger/register", formData)
                     .then((res) => {
-                        console.log(res);
+                        if (res.data.error === true) {
+                            alert(res.data.message);
+                        } else {
+                            setEmail(emailSignUp);
+                            alert(res.data.message);
+                        }
                     })
                     .catch((err) => {
-                        alert(err.response.data.message);
+                        alert(err);
                     });
             } catch (error) {
-                alert(err.response.data.message);
+                alert(err);
             }
-            getPassengerDetail();
-            setRedirect(true);
-        }
-        if (redirect === true) {
-            window.location.href = "/";
         }
     }
 
@@ -123,7 +142,9 @@ const Register = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your email address..."
-                                onChange={(ev) => setEmail(ev.target.value)}
+                                onChange={(ev) =>
+                                    setEmailSignUp(ev.target.value)
+                                }
                             />
                         </div>
                         <div>
@@ -133,8 +154,22 @@ const Register = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-1 mt-1 ml-2 bg-transparent"
                                 placeholder="Enter your password here..."
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 onChange={(ev) => setPassword(ev.target.value)}
+                            />
+                            <label
+                                for="check"
+                                className="text-sm font-primary font-bold pt-2 pr-2"
+                            >
+                                Show Password
+                            </label>
+                            <input
+                                id="check"
+                                type="checkbox"
+                                value={showPassword}
+                                onChange={() =>
+                                    setShowPassword((prev) => !prev)
+                                }
                             />
                         </div>
                     </div>

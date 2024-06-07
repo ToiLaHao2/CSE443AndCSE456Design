@@ -1,12 +1,30 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { middleWareWithPOST } from "../api/ApiService";
 import { PassengerContext } from "../contexts/PassengerContext";
 
 const Login = () => {
-    const [redirect, setRedirect] = useState(false);
-    const [password, setPassword] = useState(null);
-    const { getPassengerDetail, email, setEmail } =
+    const [emailLogin, setEmailLogin] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const { getPassengerDetail, email, setEmail, ready } =
         useContext(PassengerContext);
+
+    useEffect(() => {
+        if (email !== "") {
+            getPassengerDetail();
+        }
+    }, [email, getPassengerDetail]);
+
+    useEffect(() => {
+        if (ready === true) {
+            setIsLoggedIn(true);
+        }
+    }, [ready]);
+
+    if (isLoggedIn) {
+        window.location.href = "/";
+    }
 
     function handleCheckData() {
         if (email === null) {
@@ -23,25 +41,25 @@ const Login = () => {
     function handleLogin(ev) {
         if (handleCheckData() == true) {
             const formData = new FormData();
-            formData.append("email", email);
+            formData.append("email", emailLogin);
             formData.append("password", password);
             try {
                 middleWareWithPOST
                     .post("/passenger/login", formData)
                     .then((res) => {
-                        alert(res);
+                        if (res.data.error === true) {
+                            alert(res.data.message);
+                        } else {
+                            setEmail(emailLogin);
+                            alert(res.data.message);
+                        }
                     })
                     .catch((err) => {
-                        alert(err.response.data.message);
+                        alert(err);
                     });
             } catch (err) {
-                alert(err.response.data.message);
+                alert(err);
             }
-            getPassengerDetail();
-            setRedirect(true);
-        }
-        if (redirect === true) {
-            window.location.href = "/";
         }
     }
 
@@ -56,8 +74,8 @@ const Login = () => {
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                 placeholder="Enter your email address..."
-                                value={email}
-                                onChange={(ev) => setEmail(ev.target.value)}
+                                value={emailLogin}
+                                onChange={(ev) => setEmailLogin(ev.target.value)}
                             />
                         </div>
                         <div>

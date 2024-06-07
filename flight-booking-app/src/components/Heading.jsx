@@ -1,6 +1,38 @@
+import { useContext, useEffect, useState } from "react";
 import logo from "../assets/img/logo.png";
+import { PassengerContext } from "../contexts/PassengerContext";
 
 const Heading = () => {
+    const { passenger, ready } = useContext(PassengerContext);
+    const [componentShow, setComponentShow] = useState(null);
+
+    useEffect(() => {
+        if (ready === true) {
+            setComponentShow(
+                <button className="bg-blue-500 text-white inline-block py-2 px-4 font-bold">
+                    Welcome, {passenger.fullName}
+                </button>
+            );
+        } else {
+            setComponentShow(
+                <div>
+                    <a
+                        href="/login"
+                        class="text-gray-800 dark:text-white hover:bg-blue-100 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+                    >
+                        Sign in
+                    </a>
+                    <a
+                        href="/signUp"
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                    >
+                        Sign up
+                    </a>
+                </div>
+            );
+        }
+    }, [ready, passenger]);
+
     return (
         <header className="bg-white shadow-lg w-full transition-all duration-500">
             <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
@@ -16,18 +48,7 @@ const Heading = () => {
                         </span>
                     </a>
                     <div class="flex items-center lg:order-2">
-                        <a
-                            href="/login"
-                            class="text-gray-800 dark:text-white hover:bg-blue-100 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                        >
-                            Sign in
-                        </a>
-                        <a
-                            href="/signUp"
-                            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                        >
-                            Sign up
-                        </a>
+                        <div>{componentShow}</div>
                         <button
                             data-collapse-toggle="mobile-menu-2"
                             type="button"
