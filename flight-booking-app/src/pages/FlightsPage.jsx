@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FindOneWayFlightForm from "../components/bookingComponents/FindOneWayFlightForm";
 import FindRoundTripFlightForm from "../components/bookingComponents/FindRoundTripFlightForm";
 import SmallFlightInformation from "../components/flightComponents/SmallFlightInformation";
+import { middleWareWithPOST } from "../api/ApiService";
 
 const Flights = () => {
     const [activeTab, setActiveTab] = useState("tab1");
-    const [flights, setFlights] = useState();
+    const [flights, setFlights] = useState([]);
 
-    
+    useEffect(() => {
+        middleWareWithPOST
+            .get("/flight/flights")
+            .then((res) => {
+                console.log(res);
+                setFlights(res.data.object);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     const openTab = (tabName) => {
         setActiveTab(tabName);
@@ -18,9 +29,9 @@ const Flights = () => {
             <h1 className="font-bold text-2xl">FIND YOUR FLIGHT</h1>
             <nav className="flex pl-40">
                 <button
-                    className={`mr-10 pl-3 pr-3 rounded-full shadow-lg ${
+                    className={`p-2 mr-10 pl-3 pr-3 rounded-full shadow-lg ${
                         activeTab === "tab1"
-                            ? "active shadow-blue-500/50 bg-blue-300"
+                            ? "active shadow-blue-500/50 bg-blue-300 text-white"
                             : ""
                     }`}
                     onClick={() => {
@@ -30,9 +41,9 @@ const Flights = () => {
                     One-way Flight
                 </button>
                 <button
-                    className={`mr-10 pl-3 pr-3 rounded-full shadow-lg ${
+                    className={`p-2 mr-10 pl-3 pr-3 rounded-full shadow-lg ${
                         activeTab === "tab2"
-                            ? "active shadow-blue-500/50 bg-blue-300"
+                            ? "active shadow-blue-500/50 bg-blue-300 text-white"
                             : ""
                     }`}
                     onClick={() => {
@@ -61,7 +72,11 @@ const Flights = () => {
                 </div>
             </div>
             <div className="h-screen mt-5 p-5">
-                <SmallFlightInformation />
+                {flights &&
+                    flights.length > 0 &&
+                    flights.map((flight) => (
+                        <SmallFlightInformation flight={flight} />
+                    ))}
             </div>
         </div>
     );
