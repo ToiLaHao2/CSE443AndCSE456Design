@@ -25,7 +25,7 @@ const Flights = () => {
     };
 
     return (
-        <div className="text-center relative pt-10">
+        <div className="text-center relative pt-10 h-screen">
             <h1 className="font-bold text-2xl">FIND YOUR FLIGHT</h1>
             <nav className="flex pl-40">
                 <button
@@ -60,7 +60,9 @@ const Flights = () => {
                         activeTab === "tab1" ? "" : "hidden"
                     }`}
                 >
-                    <FindOneWayFlightForm />
+                    <FindOneWayFlightForm
+                        active={activeTab === "tab1" ? true : false}
+                    />
                 </div>
                 <div
                     id="tab2"
@@ -68,7 +70,9 @@ const Flights = () => {
                         activeTab === "tab2" ? "" : "hidden"
                     }`}
                 >
-                    <FindRoundTripFlightForm />
+                    <FindRoundTripFlightForm
+                        active={activeTab === "tab1" ? true : false}
+                    />
                 </div>
             </div>
             <div className="h-screen mt-5 p-5">
