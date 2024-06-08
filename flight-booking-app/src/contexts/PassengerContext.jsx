@@ -5,11 +5,10 @@ export const PassengerContext = createContext();
 
 const PassengerProvider = ({ children }) => {
     const [passenger, setPassenger] = useState(() => {
-        const storePassengerData = localStorage.getItem("passengerDataTemp");
+        const storePassengerData = localStorage.getItem("passengerData");
         return storePassengerData
             ? JSON.parse(storePassengerData)
             : {
-                  id: null,
                   fullName: null,
                   dateOfBirth: null,
                   gender: null,
@@ -23,8 +22,14 @@ const PassengerProvider = ({ children }) => {
                   password: null,
               };
     });
-    const [email, setEmail] = useState("");
-    const [ready, setReady] = useState(false);
+    const [email, setEmail] = useState(() => {
+        const storeEmail = localStorage.getItem("email");
+        return storeEmail === null ? storeEmail : "";
+    });
+    const [ready, setReady] = useState(() => {
+        const ready = localStorage.getItem("ready");
+        return ready ? false : ready;
+    });
 
     async function getPassengerDetail() {
         const formData = new FormData();
@@ -39,21 +44,26 @@ const PassengerProvider = ({ children }) => {
 
     function handleLoginSuccess(passengerData) {
         localStorage.setItem("passengerData", JSON.stringify(passengerData));
+        localStorage.setItem("ready", true);
+        localStorage.setItem("email", email);
     }
 
     useEffect(() => {
         console.log(passenger);
-        if (passenger !== null) {
+        if (passenger !== null && email !== "") {
             setReady(true);
             handleLoginSuccess(passenger);
         }
-    }, [passenger]);
+    }, [passenger, email]);
 
     function handleLogout() {
         try {
             localStorage.removeItem("passengerData");
-            setPassenger(localStorage.getItem("passengerDataTemp"));
-            setReady(false);
+            localStorage.removeItem("email");
+            localStorage.removeItem("ready");
+            setEmail(localStorage.getItem("email"));
+            setPassenger(localStorage.getItem("passengerData"));
+            setReady(localStorage.getItem("ready"));
         } catch (error) {
             console.error(error);
         }

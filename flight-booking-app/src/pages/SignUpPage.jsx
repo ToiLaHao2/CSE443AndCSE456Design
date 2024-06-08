@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { middleWareWithPOST } from "../api/ApiService";
 import { PassengerContext } from "../contexts/PassengerContext";
+import { Navigate } from 'react-router-dom';
 
 const Register = () => {
     const [fullname, setFullName] = useState(null);

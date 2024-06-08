@@ -7,7 +7,7 @@ const Heading = () => {
     const [componentShow, setComponentShow] = useState(null);
 
     useEffect(() => {
-        if (ready === true && passenger.id !== null) {
+        if (passenger !== null && passenger.fullName !== null) {
             setComponentShow(
                 <a
                     href="/passengerDetail"

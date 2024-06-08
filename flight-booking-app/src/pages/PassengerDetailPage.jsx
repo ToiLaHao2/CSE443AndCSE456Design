@@ -3,18 +3,18 @@ import { PassengerContext } from "../contexts/PassengerContext";
 import { Navigate } from "react-router-dom";
 
 const PassengerDetailPage = () => {
-    const { passenger, handleLogout, ready } = useContext(PassengerContext);
+    const { passenger, handleLogout, email } = useContext(PassengerContext);
     const [loggedOut, setLoggedOut] = useState(false);
 
-    function logOutProcess() {
-        handleLogout();
-        if (ready === false) {
+    useEffect(() => {
+        if (loggedOut === true) {
             alert("Log out completed.");
-            setLoggedOut(true);
+            handleLogout();
         }
-    }
+    }, [handleLogout, loggedOut]);
 
-    if (loggedOut) {
+
+    if (loggedOut === true) {
         return <Navigate to="/" />;
     }
 
@@ -40,7 +40,13 @@ const PassengerDetailPage = () => {
                 </div>
             </div>
             <div>
-                <button onClick={logOutProcess()}>Logout</button>
+                <button
+                    onClick={() => {
+                        setLoggedOut(true);
+                    }}
+                >
+                    Logout
+                </button>
             </div>
         </div>
     );
