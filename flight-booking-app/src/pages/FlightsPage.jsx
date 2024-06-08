@@ -5,6 +5,9 @@ import SmallFlightInformation from "../components/flightComponents/SmallFlightIn
 
 const Flights = () => {
     const [activeTab, setActiveTab] = useState("tab1");
+    const [flights, setFlights] = useState();
+
+    
 
     const openTab = (tabName) => {
         setActiveTab(tabName);
