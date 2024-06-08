@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { middleWareWithPOST } from "../../api/ApiService";
+import { FlightContext } from "../../contexts/FlightContext";
 
 const ArrivalAirport = (props) => {
     const [cities, setCities] = useState([]);
     const [active, setActive] = useState(props.active === true ? true : false);
+    const { arrivalAirportId, setArrivalAirportId } = useContext(FlightContext);
 
     useEffect(() => {
         middleWareWithPOST
@@ -26,7 +28,7 @@ const ArrivalAirport = (props) => {
                         className="outline-none px-2 py-2 w-full"
                         name="to"
                         required
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => setArrivalAirportId(e.target.value)}
                     >
                         <option value="" hidden>
                             Please Select

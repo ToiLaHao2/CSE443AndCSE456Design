@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { FlightContext } from "../../contexts/FlightContext";
+
 const TypeDate = (props) => {
+    const { departureDate, arrivalDate, setDepartureDate, setArrivalDate } =
+        useContext(FlightContext);
 
     return (
         <div>
@@ -9,7 +14,11 @@ const TypeDate = (props) => {
                     className="outline-none px-2 py-2 w-full date"
                     name="date"
                     required
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => {
+                        props.data === "Departure Date"
+                            ? setDepartureDate(e.target.value)
+                            : setArrivalDate(e.target.value);
+                    }}
                 />
             </div>
         </div>
