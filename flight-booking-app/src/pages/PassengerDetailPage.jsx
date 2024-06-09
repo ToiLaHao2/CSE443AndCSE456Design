@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { PassengerContext } from "../contexts/PassengerContext";
 import { Navigate } from "react-router-dom";
+import { middleWareWithPOST } from "../api/ApiService";
+import SmallBookingHistory from "../components/SmallBookingHistory";
 
 const PassengerDetailPage = () => {
     const { passenger, handleLogout, email } = useContext(PassengerContext);
     const [loggedOut, setLoggedOut] = useState(false);
+    const [enableEdit, setEnableEdit] = useState(false);
+    const [bookingHistoryShow, setBookingHistoryShow] = useState(false);
+    const [bookingHistories, setBookingHistories] = useState([]);
 
     useEffect(() => {
         if (loggedOut === true) {
@@ -17,36 +22,89 @@ const PassengerDetailPage = () => {
         return <Navigate to="/" />;
     }
 
+    useEffect(() => {
+        const formData = new FormData();
+        formData.append("passengerEmail", passenger.emailAddress);
+        middleWareWithPOST
+            .post("/passenger/bookingHistory", formData)
+            .then((res) => setBookingHistories(res.data.object))
+            .catch((err) => console.log(err));
+    });
+
+    function updateData() {}
     return (
         <div className="h-screen text-center">
             <div className="mt-10 mb-5 text-3xl font-bold">
-                Welcome,{" "}
-                <span className="">
-                    {passenger.fullName}Dương Thị Hoàng Oanh
-                </span>
+                Welcome,
+                <span className="">{passenger.fullName}</span>
             </div>
             <div className="flex flex-row place-content-center w-1/2 ml-auto mr-auto mt-8 border-4 border-blue-500 p-5 shadow-blue-300 shadow-xl">
-                <div className="text-left font-bold w-1/5 ml-auto">
+                <div className="text-left font-bold w-1/3 ml-auto">
                     <div className="h-8">Date Of Birth :</div>
                     <div className="h-8">Gender :</div>
                     <div className="h-8">Nationality :</div>
                     <div className="h-8">Phone number :</div>
                     <div className="h-8">Email :</div>
-                    <button className="h-8 bg-blue-300 w-full rounded-full mb-1">
+                    <div className="h-8">Passport number :</div>
+                    <button
+                        className="h-8 bg-blue-300 w-full rounded-full mb-1"
+                        onClick={() => {
+                            if (enableEdit === false) setEnableEdit(true);
+                            else setEnableEdit(false);
+                        }}
+                    >
                         Edit
                     </button>
-                    <button className="h-8 bg-blue-300 w-full rounded-full">
+                    <button
+                        className="h-8 bg-blue-300 w-full rounded-full"
+                        onClick={() => {
+                            if (bookingHistoryShow === false)
+                                setBookingHistoryShow(true);
+                            else setBookingHistoryShow(false);
+                        }}
+                    >
                         Booking history
                     </button>
                 </div>
                 <div className="text-left w-1/2 pl-2">
-                    <div className="h-8">{passenger.dateOfBirth}17/11/2002</div>
-                    <div className="h-8">{passenger.gender}Female</div>
-                    <div className="h-8">{passenger.nationality}Vietnam</div>
-                    <div className="h-8">{passenger.phoneNumber}0369708417</div>
-                    <div className="h-8">
-                        {passenger.email}oanh.duongthi.bbs20@eiu.edu.vn
-                    </div>
+                    <input
+                        value={passenger.dateOfBirth}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <input
+                        value={passenger.gender}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <input
+                        value={passenger.countryOfResidence}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <input
+                        value={passenger.phoneNumber}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <input
+                        value={passenger.emailAddress}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <input
+                        value={passenger.passportNumber}
+                        className="h-7 mb-1"
+                        disabled={!enableEdit}
+                    />
+                    <button
+                        className={`h-8 bg-blue-300 rounded-full w-1/2 ${
+                            enableEdit ? "" : "hidden"
+                        } `}
+                        onClick={() => updateData()}
+                    >
+                        Update
+                    </button>
                 </div>
             </div>
             <div className="w-1/6 mr-auto ml-auto mt-10">
@@ -58,6 +116,17 @@ const PassengerDetailPage = () => {
                 >
                     Logout
                 </button>
+            </div>
+            <div
+                className={`h-screen mt-5${
+                    bookingHistoryShow === true ? "" : "hidden"
+                }`}
+            >
+                {bookingHistories &&
+                    bookingHistories.length > 0 &&
+                    bookingHistories.map((bookingHistory) => (
+                        <SmallBookingHistory data={bookingHistory} />
+                    ))}
             </div>
         </div>
     );

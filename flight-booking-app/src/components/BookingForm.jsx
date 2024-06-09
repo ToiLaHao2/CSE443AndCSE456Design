@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { PassengerContext } from "../contexts/PassengerContext";
 import { middleWareWithPOST } from "../api/ApiService";
+import { Navigate } from "react-router-dom";
 
 const BookingForm = (props) => {
     const { passenger } = useContext(PassengerContext);
@@ -10,30 +11,47 @@ const BookingForm = (props) => {
     const [paymentMethod, setPaymentMethod] = useState("");
     const [paymentDetail, setPaymentDetail] = useState("");
     const [notes, setNotes] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
 
-    // useEffect(() => {
-    //     setTotalTicketPrice(flight.ticketPrice * numOfPassenger);
-    // }, [numOfPassenger]);
+    useEffect(() => {
+        setTotalTicketPrice(flight.ticketPrice * numOfPassenger);
+    }, [numOfPassenger]);
 
     const handleOptionChange = (event) => {
         setPaymentMethod(event.target.value);
     };
 
-    // function handleBooking() {
-    //     const formData = new FormData();
-    //     formData.append("flightId", flight.id);
-    //     formData.append("passengerEmail", passenger.emailAddress);
-    //     formData.append("numberOfPassenger", numOfPassenger);
-    //     formData.append("totalTicketPrice", totalTicketPrice);
-    //     formData.append("paymentMethod", paymentMethod);
-    //     formData.append("paymentDetails", paymentDetail);
-    //     formData.append("notes", notes);
+    function handleBooking() {
+        const formData = new FormData();
+        // console.log(flight.id);
+        // console.log(passenger.emailAddress);
+        // console.log(numOfPassenger);
+        // console.log(totalTicketPrice);
+        // console.log(paymentMethod);
+        // console.log(paymentDetail);
+        // console.log(notes);
+        formData.append("flightId", flight.id);
+        formData.append("passengerEmail", passenger.emailAddress);
+        formData.append("numberOfPassenger", numOfPassenger);
+        formData.append("totalTicketsPrice", totalTicketPrice);
+        formData.append("paymentMethod", paymentMethod);
+        formData.append("paymentDetails", paymentDetail);
+        formData.append("notes", notes);
 
-    //     middleWareWithPOST
-    //         .post("/booking/add", formData)
-    //         .then((res) => console.log(res))
-    //         .catch((err) => console.log(err));
-    // }
+        console.log(formData.get("flightId"));
+
+        middleWareWithPOST
+            .post("/booking/add", formData)
+            .then((res) => {
+                alert(res.data.message);
+                setIsSuccess(true);
+            })
+            .catch((err) => console.log(err));
+    }
+
+    if (isSuccess === true) {
+        return <Navigate to={"/"} />;
+    }
 
     return (
         <div className="place-contente-center h-screen p-5">
@@ -47,7 +65,7 @@ const BookingForm = (props) => {
                         <div>
                             <div className="mb-1 h-9 w-24">
                                 <span className="font-bold">From : </span>
-                                {/* {flight.departureAirportId} */}1
+                                {flight.departureAirportId}
                             </div>
                             <div className="mb-1 h-9 w-24 font-bold">
                                 Duration :{" "}
@@ -56,11 +74,9 @@ const BookingForm = (props) => {
                         <div>
                             <div className="mb-1 h-9">
                                 <span className="font-bold">To : </span>
-                                {/* {flight.arrivalAirportId} */}2
+                                {flight.arrivalAirportId}
                             </div>
-                            <div className="mb-1 h-9">
-                                {/* {flight.duration} */}3
-                            </div>
+                            <div className="mb-1 h-9">{flight.duration}</div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +87,7 @@ const BookingForm = (props) => {
                     <div className="flex flex-row">
                         <div className="mr-2">
                             <div className="mb-1 h-9 font-bold">
-                                Seat class :{" "}
+                                Seat class :
                             </div>
                             <div className="mb-1 h-9 font-bold">
                                 Price per seat :
@@ -91,12 +107,8 @@ const BookingForm = (props) => {
                             <div className="mb-1 h-9 font-bold">Notes</div>
                         </div>
                         <div className="mr-2 ml-2">
-                            <div className="mb-1 h-9">
-                                {/* {flight.seatClass} */}1
-                            </div>
-                            <div className="mb-1 h-9">
-                                {/* {flight.ticketPrice} */}2
-                            </div>
+                            <div className="mb-1 h-9">{flight.seatClass}</div>
+                            <div className="mb-1 h-9">{flight.ticketPrice}</div>
                             <div className="mb-1 h-9">
                                 <input
                                     className="h-7"
@@ -107,7 +119,7 @@ const BookingForm = (props) => {
                                     }
                                 />
                             </div>
-                            <div className="mb-1 h-9">{totalTicketPrice}3</div>
+                            <div className="mb-1 h-9">{totalTicketPrice}</div>
                             <div className="mb-1 h-9">
                                 <label className="font-bold mr-2">
                                     <input
@@ -180,7 +192,10 @@ const BookingForm = (props) => {
                 </div>
             </div>
             <div className="text-center w-1/4 mr-auto ml-auto mt-5">
-                <button className="bg-blue-500 w-full p-2 text-white rounded-full shadow-lg shadow-blue-300 hover:shadow-blue-400">
+                <button
+                    className="bg-blue-500 w-full p-2 text-white rounded-full shadow-lg shadow-blue-300 hover:shadow-blue-400"
+                    onClick={() => handleBooking()}
+                >
                     BOOK
                 </button>
             </div>
