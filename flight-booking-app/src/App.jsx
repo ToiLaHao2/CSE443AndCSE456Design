@@ -10,6 +10,7 @@ import Register from "./pages/SignUpPage";
 import Home from "./pages/HomePage";
 import Footer from "./components/Footer";
 import PassengerDetailPage from "./pages/PassengerDetailPage";
+import FLightDetail from "./components/flightComponents/FlightDetail";
 
 export default function App() {
     const router = createBrowserRouter([
@@ -40,6 +41,10 @@ export default function App() {
         {
             path: "/passengerDetail",
             element: <PassengerDetailPage />,
+        },
+        {
+            path: "/flightDetail/:id",
+            element: <FLightDetail />,
         },
     ]);
 

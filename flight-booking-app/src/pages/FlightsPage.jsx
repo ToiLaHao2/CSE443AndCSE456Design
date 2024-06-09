@@ -76,11 +76,11 @@ const Flights = () => {
                 </div>
             </div>
             <div className="h-screen mt-5 p-5">
-                {flights &&
+                {/* {flights &&
                     flights.length > 0 &&
                     flights.map((flight) => (
                         <SmallFlightInformation flight={flight} />
-                    ))}
+                    ))} */}
             </div>
         </div>
     );

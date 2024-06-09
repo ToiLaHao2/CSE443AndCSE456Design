@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 const SmallFlightInformation = (props) => {
     const flight = props.flight;
+    console.log(flight);
 
     return (
         <div className="flex flex-row p-2 shadow-lg shadow-slate-300 hover:shadow-slate-400 bg-blue-100 rounded-xl w-10/12 ml-auto mr-auto mb-4">
@@ -75,20 +78,20 @@ const SmallFlightInformation = (props) => {
                     {flight.aircraftType} exploited by TUF Airline
                 </div>
                 <div>
-                    <a
-                        href="#"
+                    <Link
+                        to={`/flightDetail/${flight.id}`}
                         className="text-blue-900 underline-offset-4 underline"
                     >
                         See itinerary details
-                    </a>
+                    </Link>
                 </div>
             </div>
             <div className="basis-2/6 text-center flex flex-row place-content-center p-1">
-                <div className="basis-1/2">
+                <Link className="basis-1/2">
                     <div>{flight.seatClass}</div>
                     <div>from {flight.ticketPrice}</div>
                     <p>VNĐ</p>
-                </div>
+                </Link>
             </div>
         </div>
     );
