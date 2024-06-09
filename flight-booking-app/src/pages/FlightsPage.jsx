@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FindOneWayFlightForm from "../components/bookingComponents/FindOneWayFlightForm";
 import FindRoundTripFlightForm from "../components/bookingComponents/FindRoundTripFlightForm";
-import SmallFlightInformation from "../components/flightComponents/SmallFlightInformation";
 import { middleWareWithPOST } from "../api/ApiService";
 
 const Flights = () => {

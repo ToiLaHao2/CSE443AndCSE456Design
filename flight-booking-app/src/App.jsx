@@ -11,6 +11,7 @@ import Home from "./pages/HomePage";
 import Footer from "./components/Footer";
 import PassengerDetailPage from "./pages/PassengerDetailPage";
 import FLightDetail from "./components/flightComponents/FlightDetail";
+import BookingForm from "./components/BookingForm";
 
 export default function App() {
     const router = createBrowserRouter([
@@ -45,6 +46,14 @@ export default function App() {
         {
             path: "/flightDetail/:id",
             element: <FLightDetail />,
+        },
+        {
+            path: "/bookingForm",
+            element: <BookingForm />,
+        },
+        {
+            path: "/passengerDetailPage",
+            element: <PassengerDetailPage />,
         },
     ]);
 
