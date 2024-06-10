@@ -9,21 +9,9 @@ const PassengerDetailPage = () => {
         useContext(PassengerContext);
     const [loggedOut, setLoggedOut] = useState(false);
     const [enableEdit, setEnableEdit] = useState(false);
-    const [bookingHistoryShow, setBookingHistoryShow] = useState(false);
     const [bookingHistories, setBookingHistories] = useState([]);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [passportNumber, setPassportNumber] = useState("");
-
-    useEffect(() => {
-        if (loggedOut === true) {
-            alert("Log out completed.");
-            handleLogout();
-        }
-    }, [handleLogout, loggedOut]);
-
-    if (loggedOut === true) {
-        return <Navigate to="/" />;
-    }
 
     const updateProcess = () => {
         const formData = new FormData();
@@ -37,7 +25,7 @@ const PassengerDetailPage = () => {
                 setPassenger(res.data.object);
                 alert(res.data.message);
             })
-            .then((err) => console.log(err));
+            .catch((err) => console.log(err));
     };
     useEffect(() => {
         const formData = new FormData();
@@ -48,10 +36,16 @@ const PassengerDetailPage = () => {
             .catch((err) => console.log(err));
     }, [passenger.emailAddress]);
 
-    // const updateData = () => {
-    //     alert("working on update");
-    // };
+    useEffect(() => {
+        if (loggedOut === true) {
+            alert("Log out completed.");
+            handleLogout();
+        }
+    }, [handleLogout, loggedOut]);
 
+    if (loggedOut === true) {
+        return <Navigate to="/" />;
+    }
     return (
         <div className="h-screen text-center">
             <div className="mt-10 mb-5 text-3xl font-bold">
@@ -75,16 +69,6 @@ const PassengerDetailPage = () => {
                     >
                         Edit
                     </button>
-                    {/* <button
-                        className="h-8 bg-blue-300 w-full rounded-full"
-                        onClick={() => {
-                            if (bookingHistoryShow === false)
-                                setBookingHistoryShow(true);
-                            else setBookingHistoryShow(false);
-                        }}
-                    >
-                        Booking history
-                    </button> */}
                 </div>
                 <div className="text-left w-1/2 pl-2">
                     <input
