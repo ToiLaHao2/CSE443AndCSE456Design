@@ -8,7 +8,7 @@ const PassengerDetailPage = () => {
     const { passenger, handleLogout, setPassenger } =
         useContext(PassengerContext);
     const [loggedOut, setLoggedOut] = useState(false);
-    const [enableEdit, setEnableEdit] = useState(false);
+    
     const [bookingHistories, setBookingHistories] = useState([]);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [passportNumber, setPassportNumber] = useState("");
