@@ -9,7 +9,7 @@ const ArrivalAirport = (props) => {
 
     useEffect(() => {
         middleWareWithPOST
-            .post("/airport/getAirport")
+            .get("/Airports/getAllAirport")
             .then((res) => {
                 console.log(res);
                 setCities(res.data.object);

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_API_URL = "http://localhost:4005";
+export const BASE_API_URL = "https://localhost:7240";
 
 export const middleWareWithPOST = axios.create({
     baseURL: BASE_API_URL,
